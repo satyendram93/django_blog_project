@@ -1,0 +1,54 @@
+{% extends "myblog/base.html" %}
+{% load static %} 
+
+{% block title %}
+BlogHomePage
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for blog in blogs %}
+  <div class="col">
+    <div class="card h-100">
+      {% if blog.image %}
+      <img src="{{blog.image.url}}" class="card-img-top" alt="Image Not Found">
+      {% else %}
+      <img src="{% static 'myblog/img/dumy_post_img.png' %}" class="card-img-top" alt="Default Image">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{blog.title}}</h5>
+        <p class="card-text">{{blog.short_content}}<a href="{% url 'blog-detail' blog.pk %}">Read more</a></p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated {{blog.created_at | timesince}} ago</small>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>No Post Found!</p>
+  {% endfor %}
+</div>
+
+<!--start pagination-->
+<nav aria-label="...">
+  <ul class="pagination mt-1">
+    <li class="page-item disabled">
+      <span class="page-link">Previous</span>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item active" aria-current="page">
+      <span class="page-link">2</span>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+<!--end pagination-->
+
+
+
+{% endblock %}
