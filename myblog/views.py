@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import Http404
 from django.contrib import messages
+from django.core.paginator import Paginator
 from . models import Blog
 from .forms import BlogForm
 
@@ -8,8 +9,13 @@ from .forms import BlogForm
 
 def blog_home(request):
     blogs = Blog.objects.all()
+    paginator = Paginator(blogs, 6)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     context = {
-        'blogs': blogs,
+        # 'blogs': blogs,
+        'page_obj': page_obj,
+
     }
     return render(request, 'myblog/blog_home.html', context)
 
@@ -49,8 +55,12 @@ def blog_update_view(request, pk):
 
 def blog_list_view(request):
     blogs = Blog.objects.all()
+    paginator = Paginator(blogs, 6)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     context = {
-        'blogs': blogs,
+        # 'blogs': blogs,
+        'page_obj': page_obj,
     }
     return render(request, 'myblog/blog_list.html', context)
 
