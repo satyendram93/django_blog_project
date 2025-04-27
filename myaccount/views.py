@@ -8,5 +8,5 @@ def user_home(request):
 
 # class UserSignupView(View):
 #     def get(self, request):
-#         if request.method == 'GET':
+#         form = 
 
